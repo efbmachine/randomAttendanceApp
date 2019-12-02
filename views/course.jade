@@ -1,0 +1,52 @@
+extends layout
+
+block content
+        h1= title
+        p Hello #{name}
+        h2 Welcome to #{course.title}
+        if(message)
+        h4 #{message}
+
+        p Create new student
+        form(action = "/courses/#{course.code}/students" method = "POST")
+            input(name = "name" type = "text" required placeholder = "Student name")
+            br
+            br
+            button(type = "Submit") Save!
+
+            br
+            br
+
+
+
+        if (typeof course.students[0] == 'undefined')
+            p No students added yet
+
+        else
+            p Here are the students attending
+            .container-fluid
+                .row
+                    .col-sm-7
+
+                    .col-sm-5
+                        a(href='/courses/#{course.code}/students/delete')
+                            button.btn.btn-danger(type='Submit') Delete all students
+                        br
+                        br
+
+
+            table.table.table-hover
+                thead
+                    tr
+                    th(scope='col') #
+                    th(scope='col') Name
+                            if(course.students)
+                            each att in course.students[0].attendance
+                                th(scope='col') #{att.date}
+                    tbody
+                        each student, index in course.students
+                            tr
+                            th(scope='row') #{index}
+                            td #{student.name}
+                            each val in student.attendance
+                                td #{val.present}

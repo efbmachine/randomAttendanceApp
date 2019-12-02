@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    if(message)
+    h4 #{message}
+
+    a(href='/signin') Sign in here
+    form(action = "/signup" method = "POST")
+        input(name = "name" type = "text" placeholder="Name\(optional\)")
+        input(name = "email" type = "email" required placeholder = "Email Address")
+        input(name = "password" type = "password" required placeholder = "Password")
+        button(type = "Submit") Sign me up!
